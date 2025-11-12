@@ -8,7 +8,7 @@ const Login: React.FC = () => {
   const { t } = useTranslation();
   const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [phone, setPhone] = useState('');
-  const countryCode = 20; // Fixed to Egypt
+  const [countryCode, setCountryCode] = useState(20); // Egypt country code
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -120,7 +120,7 @@ const Login: React.FC = () => {
                 type="tel"
                 id="phone"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => handlePhoneChange(e.target.value)}
                 placeholder={t('auth.phonePlaceholder')}
                 disabled={loading}
               />
