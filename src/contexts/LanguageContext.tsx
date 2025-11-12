@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface LanguageContextType {
@@ -14,7 +14,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [language, setLanguageState] = useState(i18n.language || 'en');
   const [isRTL, setIsRTL] = useState(i18n.language === 'ar');
 
-  const setLanguage = (lang: string) => {
+  const setLanguage = useCallback((lang: string) => {
     i18n.changeLanguage(lang);
     setLanguageState(lang);
     setIsRTL(lang === 'ar');
@@ -25,7 +25,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
     // Store in localStorage
     localStorage.setItem('language', lang);
-  };
+  }, [i18n]);
 
   useEffect(() => {
     // Check for stored language preference
@@ -36,7 +36,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       // Set initial direction based on current language
       setLanguage(i18n.language);
     }
-  }, []);
+  }, [i18n.language, setLanguage]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, isRTL }}>
