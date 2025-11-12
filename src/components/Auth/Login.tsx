@@ -8,7 +8,7 @@ const Login: React.FC = () => {
   const { t } = useTranslation();
   const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [phone, setPhone] = useState('');
-  const [countryCode, setCountryCode] = useState(20); // Default to Egypt
+  const countryCode = 20; // Fixed to Egypt
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,6 +16,19 @@ const Login: React.FC = () => {
 
   const { checkCustomerExist, verifyOTP } = useAuth();
   const navigate = useNavigate();
+
+  // Handle phone number input and remove leading zero if present
+  const handlePhoneChange = (value: string) => {
+    // Remove any non-digit characters
+    let cleanedPhone = value.replace(/\D/g, '');
+
+    // Remove leading zero if present
+    if (cleanedPhone.startsWith('0')) {
+      cleanedPhone = cleanedPhone.substring(1);
+    }
+
+    setPhone(cleanedPhone);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
