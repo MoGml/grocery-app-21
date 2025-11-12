@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
+import { useLanguage } from '../../contexts/LanguageContext';
+import logo from '../../assets/logo.jpg';
 import './Header.css';
 
 const Header: React.FC = () => {
-  const { user, isAuthenticated, isGuest, logout } = useAuth();
+  const { t } = useTranslation();
+  const { language, setLanguage } = useLanguage();
+  const { user, isAuthenticated, logout } = useAuth();
   const { getCartCount } = useCart();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,30 +21,39 @@ const Header: React.FC = () => {
     setMenuOpen(false);
   };
 
+  const toggleLanguage = () => {
+    const newLang = language === 'en' ? 'ar' : 'en';
+    setLanguage(newLang);
+  };
+
   const cartCount = getCartCount();
 
   return (
     <header className="header">
       <div className="header-container">
         <Link to="/" className="logo">
-          <h1>21</h1>
+          <img src={logo} alt="21 Minutes" className="logo-image" />
         </Link>
 
         <nav className={`nav ${menuOpen ? 'nav-open' : ''}`}>
           <Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>
-            Home
+            {t('nav.home')}
           </Link>
           <Link to="/products" className="nav-link" onClick={() => setMenuOpen(false)}>
-            Products
+            {t('nav.products')}
           </Link>
           {isAuthenticated && (
             <Link to="/orders" className="nav-link" onClick={() => setMenuOpen(false)}>
-              Orders
+              {t('nav.orders')}
             </Link>
           )}
         </nav>
 
         <div className="header-actions">
+          <button onClick={toggleLanguage} className="language-toggle" aria-label="Toggle language">
+            {language === 'en' ? 'ع' : 'EN'}
+          </button>
+
           <Link to="/cart" className="cart-icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -82,26 +96,16 @@ const Header: React.FC = () => {
                   <div className="user-info">
                     <p className="user-name">{user.name}</p>
                     {user.phone && <p className="user-phone">{user.phone}</p>}
-                    {isGuest && <span className="guest-badge">Guest</span>}
                   </div>
-                  {isGuest && (
-                    <Link
-                      to="/login"
-                      className="dropdown-item"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      Sign In
-                    </Link>
-                  )}
                   <button className="dropdown-item" onClick={handleLogout}>
-                    Logout
+                    {t('nav.logout')}
                   </button>
                 </div>
               )}
             </div>
           ) : (
             <Link to="/login" className="btn-login">
-              Login
+              {t('nav.login')}
             </Link>
           )}
 

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useCart } from '../../contexts/CartContext';
 import { mockProducts, categories } from '../../utils/mockData';
 import ProductCard from './ProductCard';
 import './ProductList.css';
 
 const ProductList: React.FC = () => {
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const { addToCart } = useCart();
@@ -40,8 +42,8 @@ const ProductList: React.FC = () => {
   return (
     <div className="product-list-container">
       <div className="product-header">
-        <h1>Fresh Groceries</h1>
-        <p>Quality products delivered to your doorstep</p>
+        <h1>{t('products.title')}</h1>
+        <p>{t('home.hero.subtitle')}</p>
       </div>
 
       <div className="search-bar">
@@ -61,7 +63,7 @@ const ProductList: React.FC = () => {
         </svg>
         <input
           type="text"
-          placeholder="Search products..."
+          placeholder={t('products.searchPlaceholder')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -76,14 +78,14 @@ const ProductList: React.FC = () => {
             }`}
             onClick={() => setSelectedCategory(category)}
           >
-            {category}
+            {t(`products.categories.${category.toLowerCase()}`)}
           </button>
         ))}
       </div>
 
       {filteredProducts.length === 0 ? (
         <div className="no-products">
-          <p>No products found</p>
+          <p>{t('cart.empty')}</p>
         </div>
       ) : (
         <div className="products-grid">

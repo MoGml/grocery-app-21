@@ -1,5 +1,7 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Product } from '../../types';
+import { formatEGP } from '../../utils/currency';
 
 interface ProductCardProps {
   product: Product;
@@ -7,6 +9,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
+  const { t } = useTranslation();
   return (
     <div className="product-card">
       <div className="product-image-wrapper">
@@ -30,7 +33,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
 
         <div className="product-footer">
           <div className="product-pricing">
-            <span className="product-price">${product.price.toFixed(2)}</span>
+            <span className="product-price">{formatEGP(product.price)}</span>
             <span className="product-unit">/ {product.unit}</span>
           </div>
 
@@ -39,7 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
             onClick={() => onAddToCart(product.id)}
             disabled={product.stock === 0}
           >
-            {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+            {product.stock === 0 ? t('products.outOfStock') : t('products.addToCart')}
           </button>
         </div>
       </div>

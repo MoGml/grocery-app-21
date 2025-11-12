@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import './Login.css';
 
 const Login: React.FC = () => {
-  const [step, setStep] = useState<'login' | 'otp'>('login');
-  const [name, setName] = useState('');
+  const { t } = useTranslation();
+  const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [phone, setPhone] = useState('');
+  const [countryCode, setCountryCode] = useState(20); // Default to Egypt
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [userName, setUserName] = useState('');
 
-  const { login, verifyOTP, loginAsGuest } = useAuth();
+  const { checkCustomerExist, verifyOTP } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -19,113 +22,111 @@ const Login: React.FC = () => {
     setError('');
     setLoading(true);
 
-    if (step === 'login') {
-      // Validate inputs
-      if (!name.trim()) {
-        setError('Please enter your name');
-        setLoading(false);
-        return;
-      }
+    try {
+      if (step === 'phone') {
+        // Validate phone number
+        if (!phone.trim() || phone.length < 10) {
+          setError('Please enter a valid phone number');
+          setLoading(false);
+          return;
+        }
 
-      if (!phone.trim() || phone.length < 10) {
-        setError('Please enter a valid phone number');
-        setLoading(false);
-        return;
-      }
+        // Check if customer exists
+        const response = await checkCustomerExist(phone, countryCode);
 
-      // Send OTP
-      login(phone, name);
+        if (response.isExist) {
+          // Customer exists, show OTP input
+          setUserName(response.userName);
+          setStep('otp');
+          setError(`OTP sent to your phone. Welcome back, ${response.userName}!`);
+        } else {
+          // Customer doesn't exist
+          setError('Phone number not registered. Please contact support to register.');
+        }
+      } else {
+        // Verify OTP
+        if (!otp.trim()) {
+          setError('Please enter the OTP');
+          setLoading(false);
+          return;
+        }
 
-      // Simulate sending OTP
-      setTimeout(() => {
-        setLoading(false);
-        setStep('otp');
-        setError('OTP sent to your phone (Demo: use 1234)');
-      }, 1000);
-    } else {
-      // Verify OTP
-      if (!otp.trim()) {
-        setError('Please enter the OTP');
-        setLoading(false);
-        return;
-      }
-
-      setTimeout(() => {
-        const success = verifyOTP(otp);
-        setLoading(false);
+        const success = await verifyOTP(otp, phone, countryCode);
 
         if (success) {
           navigate('/products');
         } else {
-          setError('Invalid OTP. Please try again (Demo: use 1234)');
+          setError('Invalid OTP. Please try again.');
         }
-      }, 500);
+      }
+    } catch (error: any) {
+      console.error('Authentication error:', error);
+      setError(error.response?.data?.message || 'An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleGuestMode = () => {
-    loginAsGuest();
-    navigate('/products');
-  };
-
-  const handleResendOTP = () => {
-    setError('OTP resent to your phone (Demo: use 1234)');
+  const handleBackToPhone = () => {
+    setStep('phone');
+    setOtp('');
+    setError('');
   };
 
   return (
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <h1>Welcome to 21</h1>
-          <p>{step === 'login' ? 'Sign in to continue' : 'Enter verification code'}</p>
+          <h1>{t('common.appName')}</h1>
+          <p>{step === 'phone' ? t('auth.loginSubtitle') : `Welcome ${userName}! Enter OTP`}</p>
         </div>
 
         {error && (
-          <div className={`alert ${error.includes('sent') ? 'alert-success' : 'alert-error'}`}>
+          <div className={`alert ${error.includes('Welcome back') || error.includes('OTP sent') ? 'alert-success' : 'alert-error'}`}>
             {error}
           </div>
         )}
 
-        {step === 'login' ? (
+        {step === 'phone' ? (
           <form onSubmit={handleSubmit} className="login-form">
             <div className="form-group">
-              <label htmlFor="name">Full Name</label>
+              <label htmlFor="countryCode">Country Code</label>
               <input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your full name"
+                type="number"
+                id="countryCode"
+                value={countryCode}
+                onChange={(e) => setCountryCode(parseInt(e.target.value))}
+                placeholder="20"
                 disabled={loading}
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="phone">Phone Number</label>
+              <label htmlFor="phone">{t('auth.phone')}</label>
               <input
                 type="tel"
                 id="phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="Enter your phone number"
+                placeholder={t('auth.phonePlaceholder')}
                 disabled={loading}
               />
             </div>
 
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Sending OTP...' : 'Send OTP'}
+              {loading ? t('common.loading') : t('auth.continueButton')}
             </button>
           </form>
         ) : (
           <form onSubmit={handleSubmit} className="login-form">
             <div className="form-group">
-              <label htmlFor="otp">Verification Code</label>
+              <label htmlFor="otp">{t('auth.otp')}</label>
               <input
                 type="text"
                 id="otp"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
-                placeholder="Enter 4-digit OTP"
+                placeholder={t('auth.otpPlaceholder')}
                 maxLength={4}
                 disabled={loading}
                 autoFocus
@@ -133,40 +134,20 @@ const Login: React.FC = () => {
             </div>
 
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Verifying...' : 'Verify & Continue'}
+              {loading ? t('common.loading') : t('auth.verifyOTP')}
             </button>
 
             <div className="form-footer">
               <button
                 type="button"
                 className="btn-text"
-                onClick={handleResendOTP}
+                onClick={handleBackToPhone}
                 disabled={loading}
               >
-                Resend OTP
-              </button>
-              <button
-                type="button"
-                className="btn-text"
-                onClick={() => setStep('login')}
-                disabled={loading}
-              >
-                Change Phone
+                {t('auth.backToLogin')}
               </button>
             </div>
           </form>
-        )}
-
-        {step === 'login' && (
-          <div className="divider">
-            <span>OR</span>
-          </div>
-        )}
-
-        {step === 'login' && (
-          <button className="btn-guest" onClick={handleGuestMode}>
-            Continue as Guest
-          </button>
         )}
 
         <div className="login-info">

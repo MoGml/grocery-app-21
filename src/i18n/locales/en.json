@@ -1,0 +1,142 @@
+{
+  "common": {
+    "appName": "Fresh Groceries Online",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "search": "Search",
+    "filter": "Filter",
+    "currency": "EGP",
+    "currencySymbol": "ج.م"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "cart": "Cart",
+    "orders": "Orders",
+    "login": "Login",
+    "logout": "Logout",
+    "myAccount": "My Account"
+  },
+  "auth": {
+    "login": "Login",
+    "loginTitle": "Welcome Back",
+    "loginSubtitle": "Sign in to your account",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "phone": "Phone Number",
+    "phonePlaceholder": "Enter your phone number",
+    "otp": "OTP Code",
+    "otpPlaceholder": "Enter OTP",
+    "otpInfo": "Demo OTP: 1234",
+    "verifyOTP": "Verify OTP",
+    "continueButton": "Continue",
+    "loginAsGuest": "Continue as Guest",
+    "backToLogin": "Back to Login"
+  },
+  "home": {
+    "hero": {
+      "title": "Fresh Groceries Delivered to Your Door",
+      "subtitle": "Shop from a wide selection of fresh produce, dairy, meat, and more. Quality guaranteed with every order.",
+      "cta": "Shop Now"
+    },
+    "features": {
+      "title": "Why Choose Us",
+      "fresh": {
+        "title": "Fresh Products",
+        "description": "Hand-picked fresh produce delivered daily"
+      },
+      "fast": {
+        "title": "Fast Delivery",
+        "description": "Same-day delivery for orders placed before 2 PM"
+      },
+      "quality": {
+        "title": "Quality Assured",
+        "description": "100% quality guarantee on all products"
+      }
+    }
+  },
+  "products": {
+    "title": "Our Products",
+    "searchPlaceholder": "Search products...",
+    "categories": {
+      "all": "All",
+      "vegetables": "Vegetables",
+      "fruits": "Fruits",
+      "dairy": "Dairy",
+      "bakery": "Bakery",
+      "beverages": "Beverages",
+      "meat": "Meat"
+    },
+    "addToCart": "Add to Cart",
+    "outOfStock": "Out of Stock",
+    "inStock": "In Stock"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "continueShopping": "Continue Shopping",
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Delivery Fee",
+    "total": "Total",
+    "proceedToCheckout": "Proceed to Checkout",
+    "remove": "Remove",
+    "quantity": "Qty"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "deliveryDetails": "Delivery Details",
+    "address": "Delivery Address",
+    "addressPlaceholder": "Enter your delivery address",
+    "city": "City",
+    "cityPlaceholder": "Enter your city",
+    "postalCode": "Postal Code",
+    "postalCodePlaceholder": "Enter postal code",
+    "phone": "Phone Number",
+    "phonePlaceholder": "Enter your phone number",
+    "notes": "Order Notes (Optional)",
+    "notesPlaceholder": "Any special instructions for delivery",
+    "orderSummary": "Order Summary",
+    "items": "Items",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Delivery Fee",
+    "total": "Total",
+    "placeOrder": "Place Order",
+    "requiredFields": "Please fill in all required fields"
+  },
+  "orders": {
+    "title": "My Orders",
+    "noOrders": "You haven't placed any orders yet",
+    "startShopping": "Start Shopping",
+    "orderId": "Order ID",
+    "date": "Date",
+    "status": "Status",
+    "total": "Total",
+    "items": "items",
+    "deliveryAddress": "Delivery Address",
+    "phone": "Phone",
+    "statusValues": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    }
+  },
+  "orderSuccess": {
+    "title": "Order Placed Successfully!",
+    "message": "Thank you for your order. We'll deliver your items soon.",
+    "orderId": "Order ID",
+    "total": "Total Amount",
+    "deliveryAddress": "Delivery Address",
+    "phone": "Phone",
+    "viewOrders": "View My Orders",
+    "continueShopping": "Continue Shopping"
+  }
+}

@@ -18,12 +18,14 @@
 .logo {
   text-decoration: none;
   color: var(--primary-color);
+  display: flex;
+  align-items: center;
 }
 
-.logo h1 {
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0;
+.logo-image {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
 }
 
 .nav {
@@ -188,6 +190,42 @@
   height: 2px;
   background: var(--text-primary);
   transition: all 0.3s ease;
+}
+
+/* Language Toggle Button */
+.language-toggle {
+  background: var(--primary-color);
+  color: var(--white);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background 0.3s ease;
+  min-width: 40px;
+  text-align: center;
+}
+
+.language-toggle:hover {
+  background: var(--primary-dark);
+}
+
+/* RTL Support for Header */
+[dir="rtl"] .dropdown-menu {
+  right: auto;
+  left: 0;
+}
+
+[dir="rtl"] .cart-badge {
+  right: auto;
+  left: 0;
+}
+
+[dir="rtl"] .nav {
+  gap: 24px;
+}
+
+[dir="rtl"] .header-actions {
+  flex-direction: row-reverse;
 }
 
 /* Tablet and Desktop */

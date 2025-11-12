@@ -2,7 +2,22 @@ export interface User {
   id: string;
   name: string;
   phone: string;
+  token?: string;
+  countryCode?: number;
   isGuest?: boolean;
+}
+
+export interface SubCategory {
+  id: number;
+  name: string;
+  pictureUrl: string;
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  pictureUrl: string;
+  subCategories: SubCategory[];
 }
 
 export interface Product {
@@ -35,11 +50,9 @@ export interface Order {
 export interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  isGuest: boolean;
-  login: (phone: string, name: string) => void;
+  checkCustomerExist: (phoneNumber: string, countryCode: number) => Promise<{ isExist: boolean; userName: string }>;
+  verifyOTP: (otp: string, phoneNumber: string, countryCode: number) => Promise<boolean>;
   logout: () => void;
-  loginAsGuest: () => void;
-  verifyOTP: (otp: string) => boolean;
 }
 
 export interface CartContextType {

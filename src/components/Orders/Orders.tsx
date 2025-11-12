@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
+import { formatEGP } from '../../utils/currency';
 import { Order } from '../../types';
 import './Orders.css';
 
 const Orders: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [orders, setOrders] = useState<Order[]>([]);
 
@@ -32,7 +35,8 @@ const Orders: React.FC = () => {
   };
 
   const getStatusText = (status: Order['status']) => {
-    return status.charAt(0).toUpperCase() + status.slice(1);
+    const statusKey = `orders.statusValues.${status}`;
+    return t(statusKey);
   };
 
   const formatDate = (dateString: string) => {
@@ -66,8 +70,8 @@ const Orders: React.FC = () => {
             <path d="M16 10a4 4 0 0 1-8 0" />
           </svg>
         </div>
-        <h2>No Orders Yet</h2>
-        <p>Your order history will appear here</p>
+        <h2>{t('orders.noOrders')}</h2>
+        <p>{t('orders.startShopping')}</p>
       </div>
     );
   }
@@ -75,8 +79,8 @@ const Orders: React.FC = () => {
   return (
     <div className="orders-container">
       <div className="orders-header">
-        <h1>My Orders</h1>
-        <p>{orders.length} {orders.length === 1 ? 'order' : 'orders'}</p>
+        <h1>{t('orders.title')}</h1>
+        <p>{orders.length} {orders.length === 1 ? t('orders.items') : t('orders.items')}</p>
       </div>
 
       <div className="orders-list">
@@ -84,7 +88,7 @@ const Orders: React.FC = () => {
           <div key={order.id} className="order-card">
             <div className="order-header-section">
               <div className="order-info">
-                <h3>Order {order.id}</h3>
+                <h3>{t('orders.orderId')} {order.id}</h3>
                 <p className="order-date">{formatDate(order.createdAt)}</p>
               </div>
               <div
@@ -105,10 +109,10 @@ const Orders: React.FC = () => {
                   />
                   <div className="order-item-details">
                     <p className="order-item-name">{item.product.name}</p>
-                    <p className="order-item-quantity">Qty: {item.quantity}</p>
+                    <p className="order-item-quantity">{t('cart.quantity')}: {item.quantity}</p>
                   </div>
                   <p className="order-item-price">
-                    ${(item.product.price * item.quantity).toFixed(2)}
+                    {formatEGP(item.product.price * item.quantity)}
                   </p>
                 </div>
               ))}
@@ -133,8 +137,8 @@ const Orders: React.FC = () => {
                 <span>{order.deliveryAddress}</span>
               </div>
               <div className="order-total">
-                <span>Total:</span>
-                <span className="total-amount">${order.total.toFixed(2)}</span>
+                <span>{t('orders.total')}:</span>
+                <span className="total-amount">{formatEGP(order.total)}</span>
               </div>
             </div>
           </div>

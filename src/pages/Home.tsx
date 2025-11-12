@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
 import './Home.css';
 
 const Home: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
 
   return (
@@ -11,17 +13,17 @@ const Home: React.FC = () => {
       <section className="hero">
         <div className="hero-content">
           <h1>Welcome to 21</h1>
-          <p className="hero-subtitle">Fresh Groceries Delivered to Your Doorstep</p>
+          <p className="hero-subtitle">{t('home.hero.title')}</p>
           <p className="hero-description">
-            Shop from a wide selection of quality products and enjoy fast, reliable delivery.
+            {t('home.hero.subtitle')}
           </p>
           <div className="hero-actions">
             <Link to="/products" className="btn-hero-primary">
-              Shop Now
+              {t('home.hero.cta')}
             </Link>
             {!user && (
               <Link to="/login" className="btn-hero-secondary">
-                Sign In
+                {t('nav.login')}
               </Link>
             )}
           </div>
@@ -53,8 +55,8 @@ const Home: React.FC = () => {
               <polyline points="12 6 12 12 16 14" />
             </svg>
           </div>
-          <h3>Fast Delivery</h3>
-          <p>Get your orders delivered within hours</p>
+          <h3>{t('home.features.fast.title')}</h3>
+          <p>{t('home.features.fast.description')}</p>
         </div>
 
         <div className="feature-card">
@@ -73,8 +75,8 @@ const Home: React.FC = () => {
               <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
             </svg>
           </div>
-          <h3>Best Prices</h3>
-          <p>Competitive prices on all products</p>
+          <h3>{t('home.features.fresh.title')}</h3>
+          <p>{t('home.features.fresh.description')}</p>
         </div>
 
         <div className="feature-card">
@@ -94,16 +96,16 @@ const Home: React.FC = () => {
               <path d="m9 12 2 2 4-4" />
             </svg>
           </div>
-          <h3>Quality Assured</h3>
-          <p>Fresh and high-quality products guaranteed</p>
+          <h3>{t('home.features.quality.title')}</h3>
+          <p>{t('home.features.quality.description')}</p>
         </div>
       </section>
 
       <section className="cta">
-        <h2>Start Shopping Today</h2>
-        <p>Join thousands of happy customers enjoying fresh groceries delivered to their homes</p>
+        <h2>{t('home.hero.cta')}</h2>
+        <p>{t('home.hero.subtitle')}</p>
         <Link to="/products" className="btn-cta">
-          Browse Products
+          {t('home.hero.cta')}
         </Link>
       </section>
     </div>

@@ -1,12 +1,15 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext';
+import { formatEGP } from '../../utils/currency';
 import './Cart.css';
 
 const Cart: React.FC = () => {
+  const { t } = useTranslation();
   const { cart, updateQuantity, removeFromCart, getCartTotal } = useCart();
-  const { isAuthenticated, isGuest } = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const handleCheckout = () => {
@@ -37,10 +40,10 @@ const Cart: React.FC = () => {
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
           </svg>
         </div>
-        <h2>Your Cart is Empty</h2>
-        <p>Add some products to get started!</p>
+        <h2>{t('cart.empty')}</h2>
+        <p>{t('home.hero.cta')}</p>
         <Link to="/products" className="btn-continue-shopping">
-          Start Shopping
+          {t('cart.continueShopping')}
         </Link>
       </div>
     );
@@ -49,8 +52,8 @@ const Cart: React.FC = () => {
   return (
     <div className="cart-container">
       <div className="cart-header">
-        <h1>Shopping Cart</h1>
-        <p>{cart.length} items</p>
+        <h1>{t('cart.title')}</h1>
+        <p>{cart.length} {t('cart.quantity')}</p>
       </div>
 
       <div className="cart-content">
@@ -66,7 +69,7 @@ const Cart: React.FC = () => {
               <div className="cart-item-details">
                 <h3>{item.product.name}</h3>
                 <p className="cart-item-price">
-                  ${item.product.price.toFixed(2)} / {item.product.unit}
+                  {formatEGP(item.product.price)} / {item.product.unit}
                 </p>
 
                 <div className="quantity-controls">
@@ -92,7 +95,7 @@ const Cart: React.FC = () => {
 
               <div className="cart-item-actions">
                 <p className="cart-item-total">
-                  ${(item.product.price * item.quantity).toFixed(2)}
+                  {formatEGP(item.product.price * item.quantity)}
                 </p>
                 <button
                   className="btn-remove"
@@ -122,37 +125,31 @@ const Cart: React.FC = () => {
 
         <div className="cart-summary">
           <div className="cart-summary-card">
-            <h2>Order Summary</h2>
+            <h2>{t('cart.orderSummary')}</h2>
 
             <div className="summary-row">
-              <span>Subtotal</span>
-              <span>${getCartTotal().toFixed(2)}</span>
+              <span>{t('cart.subtotal')}</span>
+              <span>{formatEGP(getCartTotal())}</span>
             </div>
 
             <div className="summary-row">
-              <span>Delivery Fee</span>
-              <span>$5.00</span>
+              <span>{t('cart.deliveryFee')}</span>
+              <span>{formatEGP(50)}</span>
             </div>
 
             <div className="summary-divider"></div>
 
             <div className="summary-row total">
-              <span>Total</span>
-              <span>${(getCartTotal() + 5).toFixed(2)}</span>
+              <span>{t('cart.total')}</span>
+              <span>{formatEGP(getCartTotal() + 50)}</span>
             </div>
 
-            {isGuest && (
-              <div className="guest-notice">
-                <p>Sign in to place your order</p>
-              </div>
-            )}
-
             <button className="btn-checkout" onClick={handleCheckout}>
-              {isAuthenticated ? 'Proceed to Checkout' : 'Sign In to Checkout'}
+              {isAuthenticated ? t('cart.proceedToCheckout') : t('nav.login')}
             </button>
 
             <Link to="/products" className="btn-continue">
-              Continue Shopping
+              {t('cart.continueShopping')}
             </Link>
           </div>
         </div>

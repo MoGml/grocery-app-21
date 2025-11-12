@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
+import { formatEGP } from '../../utils/currency';
 import { Order } from '../../types';
 import './Checkout.css';
 
 const Checkout: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { cart, getCartTotal, clearCart } = useCart();
   const navigate = useNavigate();
@@ -25,19 +28,19 @@ const Checkout: React.FC = () => {
     const newErrors: { [key: string]: string } = {};
 
     if (!formData.address.trim()) {
-      newErrors.address = 'Address is required';
+      newErrors.address = t('checkout.address');
     }
 
     if (!formData.city.trim()) {
-      newErrors.city = 'City is required';
+      newErrors.city = t('checkout.city');
     }
 
     if (!formData.postalCode.trim()) {
-      newErrors.postalCode = 'Postal code is required';
+      newErrors.postalCode = t('checkout.postalCode');
     }
 
     if (!formData.phone.trim() || formData.phone.length < 10) {
-      newErrors.phone = 'Valid phone number is required';
+      newErrors.phone = t('checkout.phone');
     }
 
     setErrors(newErrors);
@@ -70,7 +73,7 @@ const Checkout: React.FC = () => {
         id: `ORDER-${Date.now()}`,
         userId: user?.id || '',
         items: cart,
-        total: getCartTotal() + 5, // Including delivery fee
+        total: getCartTotal() + 50, // Including delivery fee (50 EGP)
         status: 'pending',
         deliveryAddress: `${formData.address}, ${formData.city}, ${formData.postalCode}`,
         phone: formData.phone,
@@ -99,23 +102,23 @@ const Checkout: React.FC = () => {
   return (
     <div className="checkout-container">
       <div className="checkout-header">
-        <h1>Checkout</h1>
+        <h1>{t('checkout.title')}</h1>
       </div>
 
       <div className="checkout-content">
         <form onSubmit={handleSubmit} className="checkout-form">
           <div className="form-section">
-            <h2>Delivery Information</h2>
+            <h2>{t('checkout.deliveryDetails')}</h2>
 
             <div className="form-group">
-              <label htmlFor="address">Street Address *</label>
+              <label htmlFor="address">{t('checkout.address')} *</label>
               <input
                 type="text"
                 id="address"
                 name="address"
                 value={formData.address}
                 onChange={handleChange}
-                placeholder="Enter your street address"
+                placeholder={t('checkout.addressPlaceholder')}
                 disabled={loading}
               />
               {errors.address && <span className="error">{errors.address}</span>}
@@ -123,28 +126,28 @@ const Checkout: React.FC = () => {
 
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="city">City *</label>
+                <label htmlFor="city">{t('checkout.city')} *</label>
                 <input
                   type="text"
                   id="city"
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  placeholder="City"
+                  placeholder={t('checkout.cityPlaceholder')}
                   disabled={loading}
                 />
                 {errors.city && <span className="error">{errors.city}</span>}
               </div>
 
               <div className="form-group">
-                <label htmlFor="postalCode">Postal Code *</label>
+                <label htmlFor="postalCode">{t('checkout.postalCode')} *</label>
                 <input
                   type="text"
                   id="postalCode"
                   name="postalCode"
                   value={formData.postalCode}
                   onChange={handleChange}
-                  placeholder="Postal Code"
+                  placeholder={t('checkout.postalCodePlaceholder')}
                   disabled={loading}
                 />
                 {errors.postalCode && (
@@ -154,27 +157,27 @@ const Checkout: React.FC = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="phone">Phone Number *</label>
+              <label htmlFor="phone">{t('checkout.phone')} *</label>
               <input
                 type="tel"
                 id="phone"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="Enter your phone number"
+                placeholder={t('checkout.phonePlaceholder')}
                 disabled={loading}
               />
               {errors.phone && <span className="error">{errors.phone}</span>}
             </div>
 
             <div className="form-group">
-              <label htmlFor="notes">Delivery Notes (Optional)</label>
+              <label htmlFor="notes">{t('checkout.notes')}</label>
               <textarea
                 id="notes"
                 name="notes"
                 value={formData.notes}
                 onChange={handleChange}
-                placeholder="Any special instructions for delivery"
+                placeholder={t('checkout.notesPlaceholder')}
                 rows={4}
                 disabled={loading}
               />
@@ -182,7 +185,7 @@ const Checkout: React.FC = () => {
           </div>
 
           <div className="checkout-summary">
-            <h2>Order Summary</h2>
+            <h2>{t('checkout.orderSummary')}</h2>
 
             <div className="order-items">
               {cart.map((item) => (
@@ -190,7 +193,7 @@ const Checkout: React.FC = () => {
                   <span>
                     {item.product.name} x {item.quantity}
                   </span>
-                  <span>${(item.product.price * item.quantity).toFixed(2)}</span>
+                  <span>{formatEGP(item.product.price * item.quantity)}</span>
                 </div>
               ))}
             </div>
@@ -198,24 +201,24 @@ const Checkout: React.FC = () => {
             <div className="summary-divider"></div>
 
             <div className="summary-row">
-              <span>Subtotal</span>
-              <span>${getCartTotal().toFixed(2)}</span>
+              <span>{t('checkout.subtotal')}</span>
+              <span>{formatEGP(getCartTotal())}</span>
             </div>
 
             <div className="summary-row">
-              <span>Delivery Fee</span>
-              <span>$5.00</span>
+              <span>{t('checkout.deliveryFee')}</span>
+              <span>{formatEGP(50)}</span>
             </div>
 
             <div className="summary-divider"></div>
 
             <div className="summary-row total">
-              <span>Total</span>
-              <span>${(getCartTotal() + 5).toFixed(2)}</span>
+              <span>{t('checkout.total')}</span>
+              <span>{formatEGP(getCartTotal() + 50)}</span>
             </div>
 
             <button type="submit" className="btn-place-order" disabled={loading}>
-              {loading ? 'Placing Order...' : 'Place Order'}
+              {loading ? t('common.loading') : t('checkout.placeOrder')}
             </button>
           </div>
         </form>

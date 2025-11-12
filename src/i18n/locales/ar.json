@@ -1,0 +1,142 @@
+{
+  "common": {
+    "appName": "بقالة طازجة أونلاين",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "close": "إغلاق",
+    "search": "بحث",
+    "filter": "تصفية",
+    "currency": "جنيه مصري",
+    "currencySymbol": "ج.م"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "cart": "السلة",
+    "orders": "الطلبات",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "myAccount": "حسابي"
+  },
+  "auth": {
+    "login": "تسجيل الدخول",
+    "loginTitle": "مرحباً بعودتك",
+    "loginSubtitle": "سجل الدخول إلى حسابك",
+    "name": "الاسم",
+    "namePlaceholder": "أدخل اسمك",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم هاتفك",
+    "otp": "رمز التحقق",
+    "otpPlaceholder": "أدخل رمز التحقق",
+    "otpInfo": "رمز التحقق التجريبي: 1234",
+    "verifyOTP": "تحقق من الرمز",
+    "continueButton": "متابعة",
+    "loginAsGuest": "الدخول كزائر",
+    "backToLogin": "العودة لتسجيل الدخول"
+  },
+  "home": {
+    "hero": {
+      "title": "بقالة طازجة توصل لباب بيتك",
+      "subtitle": "تسوق من مجموعة واسعة من المنتجات الطازجة والألبان واللحوم والمزيد. جودة مضمونة مع كل طلب.",
+      "cta": "تسوق الآن"
+    },
+    "features": {
+      "title": "لماذا تختارنا",
+      "fresh": {
+        "title": "منتجات طازجة",
+        "description": "منتجات طازجة مختارة بعناية يومياً"
+      },
+      "fast": {
+        "title": "توصيل سريع",
+        "description": "توصيل في نفس اليوم للطلبات قبل الساعة 2 ظهراً"
+      },
+      "quality": {
+        "title": "جودة مضمونة",
+        "description": "ضمان جودة 100٪ على جميع المنتجات"
+      }
+    }
+  },
+  "products": {
+    "title": "منتجاتنا",
+    "searchPlaceholder": "ابحث عن منتجات...",
+    "categories": {
+      "all": "الكل",
+      "vegetables": "خضروات",
+      "fruits": "فواكه",
+      "dairy": "ألبان",
+      "bakery": "مخبوزات",
+      "beverages": "مشروبات",
+      "meat": "لحوم"
+    },
+    "addToCart": "أضف للسلة",
+    "outOfStock": "غير متوفر",
+    "inStock": "متوفر"
+  },
+  "cart": {
+    "title": "سلة التسوق",
+    "empty": "سلتك فارغة",
+    "continueShopping": "تابع التسوق",
+    "orderSummary": "ملخص الطلب",
+    "subtotal": "المجموع الفرعي",
+    "deliveryFee": "رسوم التوصيل",
+    "total": "الإجمالي",
+    "proceedToCheckout": "إتمام الطلب",
+    "remove": "إزالة",
+    "quantity": "الكمية"
+  },
+  "checkout": {
+    "title": "إتمام الطلب",
+    "deliveryDetails": "تفاصيل التوصيل",
+    "address": "عنوان التوصيل",
+    "addressPlaceholder": "أدخل عنوان التوصيل",
+    "city": "المدينة",
+    "cityPlaceholder": "أدخل المدينة",
+    "postalCode": "الرمز البريدي",
+    "postalCodePlaceholder": "أدخل الرمز البريدي",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم هاتفك",
+    "notes": "ملاحظات الطلب (اختياري)",
+    "notesPlaceholder": "أي تعليمات خاصة للتوصيل",
+    "orderSummary": "ملخص الطلب",
+    "items": "العناصر",
+    "subtotal": "المجموع الفرعي",
+    "deliveryFee": "رسوم التوصيل",
+    "total": "الإجمالي",
+    "placeOrder": "تأكيد الطلب",
+    "requiredFields": "يرجى ملء جميع الحقول المطلوبة"
+  },
+  "orders": {
+    "title": "طلباتي",
+    "noOrders": "لم تقم بأي طلبات بعد",
+    "startShopping": "ابدأ التسوق",
+    "orderId": "رقم الطلب",
+    "date": "التاريخ",
+    "status": "الحالة",
+    "total": "الإجمالي",
+    "items": "عنصر",
+    "deliveryAddress": "عنوان التوصيل",
+    "phone": "الهاتف",
+    "statusValues": {
+      "pending": "قيد الانتظار",
+      "confirmed": "مؤكد",
+      "delivered": "تم التوصيل",
+      "cancelled": "ملغى"
+    }
+  },
+  "orderSuccess": {
+    "title": "تم تقديم الطلب بنجاح!",
+    "message": "شكراً لطلبك. سنوصل منتجاتك قريباً.",
+    "orderId": "رقم الطلب",
+    "total": "المبلغ الإجمالي",
+    "deliveryAddress": "عنوان التوصيل",
+    "phone": "الهاتف",
+    "viewOrders": "عرض طلباتي",
+    "continueShopping": "تابع التسوق"
+  }
+}

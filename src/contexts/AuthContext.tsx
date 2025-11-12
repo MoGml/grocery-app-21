@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, AuthContextType } from '../types';
+import authService from '../services/authService';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -17,53 +18,62 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [pendingAuth, setPendingAuth] = useState<{ phone: string; name: string } | null>(null);
 
   useEffect(() => {
     // Load user from localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error('Error parsing stored user:', error);
+        localStorage.removeItem('user');
+      }
     }
   }, []);
 
-  const login = (phone: string, name: string) => {
-    // Store pending authentication data
-    setPendingAuth({ phone, name });
-    // In a real app, you would send OTP to the phone number here
+  const checkCustomerExist = async (
+    phoneNumber: string,
+    countryCode: number
+  ): Promise<{ isExist: boolean; userName: string }> => {
+    try {
+      const response = await authService.checkCustomerExist(phoneNumber, countryCode);
+      return response;
+    } catch (error) {
+      console.error('Check customer exist error:', error);
+      throw error;
+    }
   };
 
-  const verifyOTP = (otp: string): boolean => {
-    // Simple OTP verification (in real app, verify with backend)
-    if (otp === '1234' && pendingAuth) {
+  const verifyOTP = async (
+    otp: string,
+    phoneNumber: string,
+    countryCode: number
+  ): Promise<boolean> => {
+    try {
+      const response = await authService.login(null, otp, phoneNumber, countryCode);
+
+      // Create user object from response
       const newUser: User = {
-        id: Date.now().toString(),
-        name: pendingAuth.name,
-        phone: pendingAuth.phone,
+        id: response.customerId.toString(),
+        name: response.displayName,
+        phone: response.phoneNumber,
+        token: response.token,
+        countryCode: countryCode,
         isGuest: false,
       };
+
       setUser(newUser);
       localStorage.setItem('user', JSON.stringify(newUser));
-      setPendingAuth(null);
       return true;
+    } catch (error) {
+      console.error('Verify OTP error:', error);
+      return false;
     }
-    return false;
-  };
-
-  const loginAsGuest = () => {
-    const guestUser: User = {
-      id: `guest-${Date.now()}`,
-      name: 'Guest',
-      phone: '',
-      isGuest: true,
-    };
-    setUser(guestUser);
-    localStorage.setItem('user', JSON.stringify(guestUser));
   };
 
   const logout = () => {
     setUser(null);
-    setPendingAuth(null);
     localStorage.removeItem('user');
     localStorage.removeItem('cart');
   };
@@ -71,11 +81,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const value: AuthContextType = {
     user,
     isAuthenticated: user !== null && !user.isGuest,
-    isGuest: user?.isGuest || false,
-    login,
-    logout,
-    loginAsGuest,
+    checkCustomerExist,
     verifyOTP,
+    logout,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { formatEGP } from '../utils/currency';
 import { Order } from '../types';
 import './OrderSuccess.css';
 
 const OrderSuccess: React.FC = () => {
+  const { t } = useTranslation();
   const location = useLocation();
   const order = location.state?.order as Order | undefined;
 
@@ -11,9 +14,9 @@ const OrderSuccess: React.FC = () => {
     return (
       <div className="order-success-container">
         <div className="order-success-card">
-          <h2>Order Not Found</h2>
+          <h2>{t('common.error')}</h2>
           <Link to="/products" className="btn-primary">
-            Continue Shopping
+            {t('orderSuccess.continueShopping')}
           </Link>
         </div>
       </div>
@@ -40,32 +43,32 @@ const OrderSuccess: React.FC = () => {
           </svg>
         </div>
 
-        <h1>Order Placed Successfully!</h1>
+        <h1>{t('orderSuccess.title')}</h1>
         <p className="success-message">
-          Thank you for your order. We'll send you a confirmation shortly.
+          {t('orderSuccess.message')}
         </p>
 
         <div className="order-details">
           <div className="detail-row">
-            <span className="detail-label">Order ID:</span>
+            <span className="detail-label">{t('orderSuccess.orderId')}:</span>
             <span className="detail-value">{order.id}</span>
           </div>
           <div className="detail-row">
-            <span className="detail-label">Total Amount:</span>
-            <span className="detail-value total">${order.total.toFixed(2)}</span>
+            <span className="detail-label">{t('orderSuccess.total')}:</span>
+            <span className="detail-value total">{formatEGP(order.total)}</span>
           </div>
           <div className="detail-row">
-            <span className="detail-label">Delivery Address:</span>
+            <span className="detail-label">{t('orderSuccess.deliveryAddress')}:</span>
             <span className="detail-value">{order.deliveryAddress}</span>
           </div>
         </div>
 
         <div className="success-actions">
           <Link to="/orders" className="btn-primary">
-            View Orders
+            {t('orderSuccess.viewOrders')}
           </Link>
           <Link to="/products" className="btn-secondary">
-            Continue Shopping
+            {t('orderSuccess.continueShopping')}
           </Link>
         </div>
       </div>
