@@ -28,15 +28,18 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [i18n]);
 
   useEffect(() => {
-    // Check for stored language preference
+    // Check for stored language preference on mount only
     const storedLang = localStorage.getItem('language');
     if (storedLang && (storedLang === 'en' || storedLang === 'ar')) {
       setLanguage(storedLang);
     } else {
       // Set initial direction based on current language
-      setLanguage(i18n.language);
+      const currentLang = i18n.language;
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = currentLang;
     }
-  }, [i18n.language, setLanguage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, isRTL }}>
