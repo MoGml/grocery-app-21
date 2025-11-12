@@ -84,6 +84,31 @@ Builds the app for production
 ### `npm test`
 Launches the test runner
 
+## Deployment 🚀
+
+### Cloudflare Pages
+
+This app is configured for easy deployment on Cloudflare Pages:
+
+1. **Connect your GitHub repository** to Cloudflare Pages
+2. **Build settings**:
+   - Framework preset: **None** (or Create React App)
+   - Build command: `npm run build`
+   - Build output directory: `build`
+   - Root directory: `/` (leave empty)
+3. **Deploy**: Cloudflare will automatically build and deploy your app
+
+The app includes:
+- `.npmrc` file to handle React 19 peer dependencies
+- `_redirects` file for proper SPA routing on Cloudflare
+
+### Other Platforms
+
+The app can also be deployed to:
+- **Vercel**: Auto-detected as Create React App
+- **Netlify**: Use build command `npm run build` and publish directory `build`
+- **GitHub Pages**: Requires additional configuration for client-side routing
+
 ## Browser Support 🌐
 
 - Chrome (latest)
