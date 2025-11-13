@@ -27,6 +27,11 @@ const Login: React.FC = () => {
       cleanedPhone = cleanedPhone.substring(1);
     }
 
+    // Limit to 10 digits (Egyptian phone number length)
+    if (cleanedPhone.length > 10) {
+      cleanedPhone = cleanedPhone.substring(0, 10);
+    }
+
     setPhone(cleanedPhone);
   };
 
@@ -37,9 +42,9 @@ const Login: React.FC = () => {
 
     try {
       if (step === 'phone') {
-        // Validate phone number
-        if (!phone.trim() || phone.length < 10) {
-          setError('Please enter a valid phone number');
+        // Validate phone number (must be exactly 10 digits for Egypt)
+        if (!phone.trim() || phone.length !== 10) {
+          setError('Please enter a valid 10-digit phone number');
           setLoading(false);
           return;
         }
@@ -119,9 +124,10 @@ const Login: React.FC = () => {
                   id="phone"
                   value={phone}
                   onChange={(e) => handlePhoneChange(e.target.value)}
-                  placeholder="1012345678"
+                  placeholder="1012341234"
                   disabled={loading}
                   className="phone-number-field"
+                  maxLength={10}
                 />
               </div>
             </div>
