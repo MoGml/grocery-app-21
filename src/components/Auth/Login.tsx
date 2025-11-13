@@ -8,7 +8,7 @@ const Login: React.FC = () => {
   const { t } = useTranslation();
   const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [phone, setPhone] = useState('');
-  const [countryCode, setCountryCode] = useState(20); // Egypt country code
+  const countryCode = 20; // Egypt country code - fixed and disabled
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -103,27 +103,27 @@ const Login: React.FC = () => {
         {step === 'phone' ? (
           <form onSubmit={handleSubmit} className="login-form">
             <div className="form-group">
-              <label htmlFor="countryCode">Country Code</label>
-              <input
-                type="number"
-                id="countryCode"
-                value={countryCode}
-                onChange={(e) => setCountryCode(parseInt(e.target.value))}
-                placeholder="20"
-                disabled={loading}
-              />
-            </div>
-
-            <div className="form-group">
               <label htmlFor="phone">{t('auth.phone')}</label>
-              <input
-                type="tel"
-                id="phone"
-                value={phone}
-                onChange={(e) => handlePhoneChange(e.target.value)}
-                placeholder={t('auth.phonePlaceholder')}
-                disabled={loading}
-              />
+              <div className="phone-input-container">
+                <div className="country-code-input">
+                  <span className="flag-emoji">🇪🇬</span>
+                  <input
+                    type="text"
+                    value={`+${countryCode}`}
+                    disabled
+                    className="country-code-field"
+                  />
+                </div>
+                <input
+                  type="tel"
+                  id="phone"
+                  value={phone}
+                  onChange={(e) => handlePhoneChange(e.target.value)}
+                  placeholder="1012345678"
+                  disabled={loading}
+                  className="phone-number-field"
+                />
+              </div>
             </div>
 
             <button type="submit" className="btn-primary" disabled={loading}>
