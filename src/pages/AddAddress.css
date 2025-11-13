@@ -1,0 +1,21 @@
+.add-address-page {
+  min-height: calc(100vh - 80px);
+  background: #fafafa;
+  padding: 2rem 0;
+}
+
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .add-address-page {
+    padding: 1rem 0;
+  }
+
+  .page-container {
+    padding: 0;
+  }
+}

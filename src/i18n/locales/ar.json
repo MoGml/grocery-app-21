@@ -18,7 +18,8 @@
   "nav": {
     "home": "الرئيسية",
     "products": "المنتجات",
-    "cart": "السلة",
+    "cart": "الحقيبة",
+    "bag": "الحقيبة",
     "orders": "الطلبات",
     "login": "تسجيل الدخول",
     "logout": "تسجيل الخروج",
@@ -60,6 +61,10 @@
         "title": "جودة مضمونة",
         "description": "ضمان جودة 100٪ على جميع المنتجات"
       }
+    },
+    "categories": {
+      "title": "تسوق حسب الفئة",
+      "viewAll": "عرض كل الفئات"
     }
   },
   "products": {
@@ -74,13 +79,22 @@
       "beverages": "مشروبات",
       "meat": "لحوم"
     },
-    "addToCart": "أضف للسلة",
+    "addToCart": "أضف للحقيبة",
+    "addedToBag": "تمت الإضافة للحقيبة!",
+    "addedToCart": "تمت الإضافة للحقيبة!",
     "outOfStock": "غير متوفر",
-    "inStock": "متوفر"
+    "inStock": "متوفر",
+    "noProducts": "لا توجد منتجات",
+    "noAddress": "يرجى إضافة عنوان توصيل لعرض المنتجات",
+    "loading": "جاري تحميل المنتجات...",
+    "allSubCategories": "الكل",
+    "previous": "السابق",
+    "next": "التالي",
+    "page": "صفحة {{page}} من {{total}}"
   },
   "cart": {
-    "title": "سلة التسوق",
-    "empty": "سلتك فارغة",
+    "title": "حقيبة التسوق",
+    "empty": "حقيبتك فارغة",
     "continueShopping": "تابع التسوق",
     "orderSummary": "ملخص الطلب",
     "subtotal": "المجموع الفرعي",
@@ -89,6 +103,20 @@
     "proceedToCheckout": "إتمام الطلب",
     "remove": "إزالة",
     "quantity": "الكمية"
+  },
+  "bag": {
+    "title": "حقيبة التسوق",
+    "empty": "حقيبتك فارغة",
+    "continueShopping": "تابع التسوق",
+    "orderSummary": "ملخص الطلب",
+    "subtotal": "المجموع الفرعي",
+    "deliveryFee": "رسوم التوصيل",
+    "total": "الإجمالي",
+    "proceedToCheckout": "إتمام الطلب",
+    "remove": "إزالة",
+    "quantity": "الكمية",
+    "expressDelivery": "التوصيل السريع (اليوم)",
+    "tomorrowDelivery": "التوصيل غداً"
   },
   "checkout": {
     "title": "إتمام الطلب",

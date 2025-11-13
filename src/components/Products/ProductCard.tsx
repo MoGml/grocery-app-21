@@ -5,44 +5,57 @@ import { formatEGP } from '../../utils/currency';
 
 interface ProductCardProps {
   product: Product;
-  onAddToCart: (productId: string) => void;
+  onAddToCart: (productId: number) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
   const { t } = useTranslation();
+  const hasDiscount = product.discountPercentage > 0;
+  const isOutOfStock = product.stockQty === 0;
+  const isLowStock = product.stockQty > 0 && product.stockQty < 10;
+
   return (
     <div className="product-card">
       <div className="product-image-wrapper">
         <img
-          src={product.image}
+          src={product.pictureUrl}
           alt={product.name}
           className="product-image"
           loading="lazy"
         />
-        {product.stock < 10 && product.stock > 0 && (
+        {hasDiscount && (
+          <span className="discount-badge">{product.discountPercentage.toFixed(0)}% OFF</span>
+        )}
+        {isLowStock && (
           <span className="stock-badge low">Low Stock</span>
         )}
-        {product.stock === 0 && (
+        {isOutOfStock && (
           <span className="stock-badge out">Out of Stock</span>
         )}
       </div>
 
       <div className="product-info">
         <h3 className="product-name">{product.name}</h3>
-        <p className="product-description">{product.description}</p>
 
         <div className="product-footer">
           <div className="product-pricing">
-            <span className="product-price">{formatEGP(product.price)}</span>
-            <span className="product-unit">/ {product.unit}</span>
+            {hasDiscount ? (
+              <>
+                <span className="product-price">{formatEGP(product.priceAfterDiscount)}</span>
+                <span className="product-price-original">{formatEGP(product.price)}</span>
+              </>
+            ) : (
+              <span className="product-price">{formatEGP(product.price)}</span>
+            )}
+            <span className="product-unit">/ {product.uomName}</span>
           </div>
 
           <button
             className="btn-add-cart"
-            onClick={() => onAddToCart(product.id)}
-            disabled={product.stock === 0}
+            onClick={() => onAddToCart(product.packagingId)}
+            disabled={isOutOfStock}
           >
-            {product.stock === 0 ? t('products.outOfStock') : t('products.addToCart')}
+            {isOutOfStock ? t('products.outOfStock') : t('products.addToCart')}
           </button>
         </div>
       </div>

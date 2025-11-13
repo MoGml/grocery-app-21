@@ -189,11 +189,11 @@ const Checkout: React.FC = () => {
 
             <div className="order-items">
               {cart.map((item) => (
-                <div key={item.product.id} className="order-item">
+                <div key={item.product.packagingId} className="order-item">
                   <span>
                     {item.product.name} x {item.quantity}
                   </span>
-                  <span>{formatEGP(item.product.price * item.quantity)}</span>
+                  <span>{formatEGP(item.product.priceAfterDiscount * item.quantity)}</span>
                 </div>
               ))}
             </div>

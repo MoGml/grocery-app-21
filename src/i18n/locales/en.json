@@ -18,7 +18,8 @@
   "nav": {
     "home": "Home",
     "products": "Products",
-    "cart": "Cart",
+    "cart": "Bag",
+    "bag": "Bag",
     "orders": "Orders",
     "login": "Login",
     "logout": "Logout",
@@ -60,6 +61,10 @@
         "title": "Quality Assured",
         "description": "100% quality guarantee on all products"
       }
+    },
+    "categories": {
+      "title": "Shop by Category",
+      "viewAll": "View All Categories"
     }
   },
   "products": {
@@ -74,13 +79,22 @@
       "beverages": "Beverages",
       "meat": "Meat"
     },
-    "addToCart": "Add to Cart",
+    "addToCart": "Add to Bag",
+    "addedToBag": "Added to bag!",
+    "addedToCart": "Added to bag!",
     "outOfStock": "Out of Stock",
-    "inStock": "In Stock"
+    "inStock": "In Stock",
+    "noProducts": "No products found",
+    "noAddress": "Please add a delivery address to view products",
+    "loading": "Loading products...",
+    "allSubCategories": "All",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{page}} of {{total}}"
   },
   "cart": {
-    "title": "Shopping Cart",
-    "empty": "Your cart is empty",
+    "title": "Shopping Bag",
+    "empty": "Your bag is empty",
     "continueShopping": "Continue Shopping",
     "orderSummary": "Order Summary",
     "subtotal": "Subtotal",
@@ -89,6 +103,20 @@
     "proceedToCheckout": "Proceed to Checkout",
     "remove": "Remove",
     "quantity": "Qty"
+  },
+  "bag": {
+    "title": "Shopping Bag",
+    "empty": "Your bag is empty",
+    "continueShopping": "Continue Shopping",
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "deliveryFee": "Delivery Fee",
+    "total": "Total",
+    "proceedToCheckout": "Proceed to Checkout",
+    "remove": "Remove",
+    "quantity": "Qty",
+    "expressDelivery": "Express Delivery (Today)",
+    "tomorrowDelivery": "Tomorrow Delivery"
   },
   "checkout": {
     "title": "Checkout",

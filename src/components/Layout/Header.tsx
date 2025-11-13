@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
-import { useCart } from '../../contexts/CartContext';
+import { useBag } from '../../contexts/BagContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import logo from '../../assets/logo.jpg';
 import './Header.css';
@@ -11,7 +11,7 @@ const Header: React.FC = () => {
   const { t } = useTranslation();
   const { language, setLanguage } = useLanguage();
   const { user, isAuthenticated, logout } = useAuth();
-  const { getCartCount } = useCart();
+  const { getBagCount } = useBag();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
     setLanguage(newLang);
   };
 
-  const cartCount = getCartCount();
+  const bagCount = getBagCount();
 
   return (
     <header className="header">
@@ -70,7 +70,7 @@ const Header: React.FC = () => {
               <circle cx="20" cy="21" r="1" />
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
             </svg>
-            {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+            {bagCount > 0 && <span className="cart-badge">{bagCount}</span>}
           </Link>
 
           {user ? (

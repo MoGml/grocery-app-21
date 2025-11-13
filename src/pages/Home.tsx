@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../contexts/AuthContext';
+import { productService } from '../services/productService';
+import { Category } from '../types';
 import './Home.css';
 
 const Home: React.FC = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const data = await productService.getCategories();
+        setCategories(data.slice(0, 6)); // Show only first 6 categories on home page
+      } catch (err) {
+        console.error('Error loading categories:', err);
+      }
+    };
+
+    loadCategories();
+  }, []);
 
   return (
     <div className="home-container">
@@ -100,6 +116,32 @@ const Home: React.FC = () => {
           <p>{t('home.features.quality.description')}</p>
         </div>
       </section>
+
+      {/* Categories Section */}
+      {categories.length > 0 && (
+        <section className="categories-section">
+          <h2>{t('home.categories.title')}</h2>
+          <div className="categories-grid">
+            {categories.map((category) => (
+              <Link
+                key={category.id}
+                to="/products"
+                className="category-card"
+              >
+                <img
+                  src={category.pictureUrl}
+                  alt={category.name}
+                  loading="lazy"
+                />
+                <h3>{category.name}</h3>
+              </Link>
+            ))}
+          </div>
+          <Link to="/products" className="btn-view-all">
+            {t('home.categories.viewAll')}
+          </Link>
+        </section>
+      )}
 
       <section className="cta">
         <h2>{t('home.hero.cta')}</h2>

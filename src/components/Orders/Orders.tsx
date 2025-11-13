@@ -103,7 +103,7 @@ const Orders: React.FC = () => {
               {order.items.map((item, index) => (
                 <div key={index} className="order-item">
                   <img
-                    src={item.product.image}
+                    src={item.product.pictureUrl}
                     alt={item.product.name}
                     className="order-item-image"
                   />
@@ -112,7 +112,7 @@ const Orders: React.FC = () => {
                     <p className="order-item-quantity">{t('cart.quantity')}: {item.quantity}</p>
                   </div>
                   <p className="order-item-price">
-                    {formatEGP(item.product.price * item.quantity)}
+                    {formatEGP(item.product.priceAfterDiscount * item.quantity)}
                   </p>
                 </div>
               ))}

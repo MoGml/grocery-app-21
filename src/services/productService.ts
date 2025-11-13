@@ -1,35 +1,29 @@
 import apiClient from '../config/api';
-import { Product, Category } from '../types';
-
-interface ProductsResponse {
-  products: Product[];
-  total: number;
-}
+import { Category, BrowseProductsResponse } from '../types';
 
 export const productService = {
-  // Get all products
-  getProducts: async (params?: {
-    category?: string;
-    search?: string;
+  // Browse products by category
+  browseProducts: async (params: {
+    categoryId: number;
+    subCategoryId?: number;
     page?: number;
-    limit?: number;
-  }): Promise<ProductsResponse> => {
+    pageSize?: number;
+  }): Promise<BrowseProductsResponse> => {
     try {
-      const response = await apiClient.get('/api/products', { params });
-      return response.data;
-    } catch (error) {
-      console.error('Get products error:', error);
-      throw error;
-    }
-  },
+      const { categoryId, subCategoryId, page = 1, pageSize = 20 } = params;
+      const queryParams: any = { page, pageSize };
 
-  // Get product by ID
-  getProductById: async (id: string): Promise<Product> => {
-    try {
-      const response = await apiClient.get(`/api/products/${id}`);
+      if (subCategoryId) {
+        queryParams.subCategoryId = subCategoryId;
+      }
+
+      const response = await apiClient.get(
+        `/customer/api/Catalog/${categoryId}/browse`,
+        { params: queryParams }
+      );
       return response.data;
     } catch (error) {
-      console.error('Get product error:', error);
+      console.error('Browse products error:', error);
       throw error;
     }
   },
@@ -38,25 +32,14 @@ export const productService = {
   getCategories: async (): Promise<Category[]> => {
     try {
       const response = await apiClient.get('/customer/api/Categories');
-      return response.data;
+      // API returns { categories: [...] }, extract the categories array
+      return response.data.categories || [];
     } catch (error) {
       console.error('Get categories error:', error);
       throw error;
     }
   },
 
-  // Search products
-  searchProducts: async (query: string): Promise<ProductsResponse> => {
-    try {
-      const response = await apiClient.get('/api/products/search', {
-        params: { q: query },
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Search products error:', error);
-      throw error;
-    }
-  },
 };
 
 export default productService;

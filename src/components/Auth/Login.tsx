@@ -53,13 +53,15 @@ const Login: React.FC = () => {
         const response = await checkCustomerExist(phone, countryCode);
 
         if (response.isExist) {
-          // Customer exists, show OTP input
+          // Customer exists, show OTP input with personalized greeting
           setUserName(response.userName);
           setStep('otp');
           setError(`OTP sent to your phone. Welcome back, ${response.userName}!`);
         } else {
-          // Customer doesn't exist
-          setError('Phone number not registered. Please contact support to register.');
+          // New customer - will be created after OTP verification
+          setUserName(''); // Empty username for new users
+          setStep('otp');
+          setError('OTP sent to your phone. Welcome!');
         }
       } else {
         // Verify OTP
@@ -96,7 +98,7 @@ const Login: React.FC = () => {
       <div className="login-card">
         <div className="login-header">
           <h1>{t('common.appName')}</h1>
-          <p>{step === 'phone' ? t('auth.loginSubtitle') : `Welcome ${userName}! Enter OTP`}</p>
+          <p>{step === 'phone' ? t('auth.loginSubtitle') : userName ? `Welcome ${userName}! Enter OTP` : 'Enter OTP to continue'}</p>
         </div>
 
         {error && (
