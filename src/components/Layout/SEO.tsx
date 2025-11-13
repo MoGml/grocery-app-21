@@ -13,8 +13,8 @@ const SEO: React.FC<SEOProps> = ({
   title = '21 - Fresh Groceries Online',
   description = 'Shop fresh groceries online with 21. Quality products delivered to your doorstep. Fast delivery, best prices, and quality assured.',
   keywords = 'groceries, online shopping, fresh produce, delivery, food, vegetables, fruits',
-  image = 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200',
-  url = 'https://21grocery.com',
+  image = 'https://20one.org/og-image.jpg',
+  url = 'https://20one.org',
 }) => {
   return (
     <Helmet>
